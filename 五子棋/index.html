@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>五子棋</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<body>
+    <canvas id="chess" width="450" height="450"></canvas>
+</body>
+<script src="./js/Base.js"></script>
+<script src="./js/UI.js"></script>
+<script src="./js/Rule.js"></script>
+<script src="./js/Action.js"></script>
+<script>
+    var you_turn = true,
+    over = false;
+    canvas.onclick = function( e ) {
+        if( !you_turn || over ) return;
+        var offset = windowToCanvas( e.clientX, e.clientY );
+        var row = Math.floor( offset.x / GRID_WIDTH ),
+            col = Math.floor( offset.y / GRID_HEIGHT );
+        if( chessData[ row ][ col ] ) return;
+        drawPiece( row, col );
+        chessData[ row ][ col ] = 2;
+        if( checkWin( row, col ) ) {
+            over = true;
+            console.log( "you win ");
+        }
+    }
+</script>
+</html>
