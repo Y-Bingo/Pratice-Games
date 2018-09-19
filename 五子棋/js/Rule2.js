@@ -1,5 +1,5 @@
 // 五元组集合，是一个三位数组
-var tuple = [];
+var tuples = [];
 // 元组计数
 var tuple_count = 0;
 // 赢法数组
@@ -7,22 +7,27 @@ var my_win = [];
 var computer_win = [];
 
 // 定义元祖的数据结构
- var tupleItem = {
-     index : 0,
-     white_piece: [],
-     black_piece: [],
-     type: 0,
- }
-
-// 初始化
-for ( var i = 0; i < GRID_ROWS; i++ )
-{
-    tuple[ i ] = [];
-    for ( var j = 0; j < GRID_COLS; j++ )
-    {
-        tuple[ i ][ j ] = [];
-    }
+var tupleItem = {
+    index: 0,
+    rote: [],
+    white_piece: [],
+    black_piece: [],
+    type: 0,
 }
+
+function createTuple( ) {
+
+}
+
+// // 初始化
+// for ( var i = 0; i < GRID_ROWS; i++ )
+// {
+//     tuple[ i ] = [];
+//     for ( var j = 0; j < GRID_COLS; j++ )
+//     {
+//         tuple[ i ][ j ] = [];
+//     }
+// }
 
 // 统计水平方向的元组
 for ( var i = 0; i < GRID_ROWS; i++ )
@@ -31,7 +36,7 @@ for ( var i = 0; i < GRID_ROWS; i++ )
     {
         for ( var k = 0; k < GRID_COMBO; k++ )
         {
-            tuple[ i ][ j + k ][ tuple_count ] = true;
+            tuples[ i ][ j + k ][ tuple_count ] = true;
         }
         tuple_count++;
     }
@@ -43,7 +48,7 @@ for ( var i = 0; i <= GRID_ROWS - GRID_COMBO; i++ )
     {
         for ( var k = 0; k < GRID_COMBO; k++ )
         {
-            tuple[ i + k ][ j ][ tuple_count ] = true;
+            tuples[ i + k ][ j ][ tuple_count ] = true;
         }
         tuple_count++;
     }
@@ -56,7 +61,7 @@ for ( var i = 0; i <= GRID_ROWS - GRID_COMBO; i++ )
     {
         for ( var k = 0; k < GRID_COMBO; k++ )
         {
-            tuple[ i + k ][ j + k ][ tuple_count ] = true;
+            tuples[ i + k ][ j + k ][ tuple_count ] = true;
         }
         tuple_count++;
     }
@@ -69,7 +74,7 @@ for ( var i = 0; i <= GRID_ROWS - GRID_COMBO; i++ )
     {
         for ( var k = 0; k < GRID_COMBO; k++ )
         {
-            tuple[ i + k ][ j - k ][ tuple_count ] = true;
+            tuples[ i + k ][ j - k ][ tuple_count ] = true;
         }
         tuple_count++;
     }
@@ -85,7 +90,7 @@ for ( var i = 0; i < tuple_count; i++ )
 function checkWin ( row, col ) {
     for ( var i = 0; i < tuple_count; i++ )
     {
-        if ( tuple[ row ][ col ][ i ] && my_win[ i ] != 10 )
+        if ( tuples[ row ][ col ][ i ] && my_win[ i ] != 10 )
         {
             my_win[ i ]++;
             computer_win[ i ] = 10;
@@ -97,25 +102,3 @@ function checkWin ( row, col ) {
     }
     return false;
 }
-
-// function checkComputerWin ( row, col ) {
-//     for ( var i = 0; i < tuple_count; i++ )
-//     {
-//         if ( tuple[ row ][ col ][ i ] )
-//         {
-//             if ( !computer_win[ i ] && computer_win[ i ] != 10 )
-//             {
-//                 computer_win = 5;
-//             } else
-//             {
-//                 computer_win[ i ]++;
-//             }
-//             my_win[ i ] = 10;
-//         }
-//         if ( computer_win[ i ] === 9 )
-//         {
-//             return true;
-//         }
-//     }
-//     return false;
-// }

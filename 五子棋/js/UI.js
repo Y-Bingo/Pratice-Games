@@ -25,13 +25,13 @@ function drawBorad() {
     context.restore();
 }
 /**
- * 
- * @param { number } row 行索引 
- * @param { number } col 列索引 
- * @param { boolean } side 角色，false: 黑棋，true: 白棋  
+ *
+ * @param { number } row 行索引
+ * @param { number } col 列索引
+ * @param { boolean } side 角色，false: 黑棋，true: 白棋
  */
 function drawPiece( row, col, side ) {
-    context.save();
+    context.save(); 
     side = side || false;
     var row_px = row * GRID_WIDTH + BOARD_PADDING_LEFT,
         col_px = col * GRID_HEIGHT + BOARD_PADDING_TOP;
