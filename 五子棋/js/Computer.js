@@ -1,26 +1,3 @@
-var 
-    // tuple is empty
-    Blank = 0,
-    // tuple contains a black chess
-    B = 1,
-    // tuple contains two black chesses
-    BB = 2,
-    // tuple contains tree black chesses
-    BBB = 3,
-    // tuple contains for black chesses
-    BBBB = 4,
-    // tuple contains a white chesses
-    W = 5,
-    // tuple contains two white chesses
-    WW = 6,
-    // tuple contains a three chesses
-    WWW = 7,
-    // tuple contains a four chesses
-    WWWW = 8,
-    // tuple does not exist
-    Virtual = 9,
-    // tuple contains at least one balck and at least one white
-    Polluted = 10;
 
 var tupleSourceTable = [];
 tupleSourceTable[ 0 ] = 7;
@@ -56,15 +33,15 @@ function ComputerAction() {
     var source = 0;
     for( var i = 0; i < tuple_count; i++ ) {
         blackType = my_win[ i ];
-        whiteType = computerin[ i ];
+        whiteType = computerwin[ i ];
         source = tupleSourceTable[ blackType ] + tupleSourceTable[ whiteType + 5];
     }
     for( var row = 0; row < GRID_ROWS; row++ ) {
         for( var col = 0; col < GRID_COLS; col++ ) {
             if( chessData[ row ][ col ] === 0 ) {
-               
+                
             } else {
-
+                
             }
            
         }
