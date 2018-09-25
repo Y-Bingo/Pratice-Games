@@ -1,99 +1,104 @@
-// 落子类型
-var FALL_TYPE = {
-    // tuple is empty
-    Blank = 0,
-    // tuple contains a black chess
-    B = 1,
-    // tuple contains two black chesses
-    BB = 2,
-    // tuple contains tree black chesses
-    BBB = 3,
-    // tuple contains for black chesses
-    BBBB = 4,
-    // tuple contains a white chesses
-    W = 5,
-    // tuple contains two white chesses
-    WW = 6,
-    // tuple contains a three chesses
-    WWW = 7,
-    // tuple contains a four chesses
-    WWWW = 8,
-    // tuple does not exist
-    Virtual = 9,
-    // tuple contains at least one balck and at least one white
-    Polluted = 10
-}
-// 元组数组
+// 五元组集合，是一个三位数组
 var tuples = [];
+// 元组计数
 var tuple_count = 0;
-function Tuple( tuple ) {
-    this.row = row;
-    this.col = col;
-    // 索引
-    this.index = tuple_count;
-    tuple_count++;
-    // 白棋 
-    this.white = 0;
-    // 黑棋
-    this.black = 0;
-    // 元组
-    this.tuple = []; 
-    // 类型
-    this.type = FALL_TYPE.Blank;
-    this.source = 
-    this.value = function() {
-        return this.tuple;
-    }
-    this.addWhite = function( row, col ) {
-        if( this.type != FALL_TYPE.Polluted ) {
+// 赢法数组
+var my_win = [];
+var computer_win = [];
 
-        }
-    }
-    this.addBlack = function( row, col ) {
-
-    }
+// 定义元祖的数据结构
+var tupleItem = {
+    index: 0,
+    rote: [],
+    white_piece: [],
+    black_piece: [],
+    type: 0,
 }
+
+function createTuple( ) {
+
+}
+
+// // 初始化
+// for ( var i = 0; i < GRID_ROWS; i++ )
+// {
+//     tuple[ i ] = [];
+//     for ( var j = 0; j < GRID_COLS; j++ )
+//     {
+//         tuple[ i ][ j ] = [];
+//     }
+// }
 
 // 统计水平方向的元组
-for( var i = 0; i < GRID_ROWS; i++ ) {
-    for( var j = 0; j <= GRID_COLS - GRID_COMBO; j++ ) {
-        var tuple = [];
-        for( var k = 0; k < GRID_COMBO; k++ ) {
-            tuple.push( [ i, j + k ] ); 
+for ( var i = 0; i < GRID_ROWS; i++ )
+{
+    for ( var j = 0; j <= GRID_COLS - GRID_COMBO; j++ )
+    {
+        for ( var k = 0; k < GRID_COMBO; k++ )
+        {
+            tuples[ i ][ j + k ][ tuple_count ] = true;
         }
-        tuples.push( new Tuple( tuple ) ); 
+        tuple_count++;
     }
 }
 // 统计竖直方向上的
-for( var i = 0; i <= GRID_ROWS - GRID_COMBO; i++ ) {
-    for( var j = 0; j < GRID_COLS; j++ ) {
-        var tuple = [];
-        for( var k = 0; k < GRID_COMBO; k++ ) {
-            tuple.push( [ i + k, j ] ); 
+for ( var i = 0; i <= GRID_ROWS - GRID_COMBO; i++ )
+{
+    for ( var j = 0; j < GRID_COLS; j++ )
+    {
+        for ( var k = 0; k < GRID_COMBO; k++ )
+        {
+            tuples[ i + k ][ j ][ tuple_count ] = true;
         }
-        tuples.push( new Tuple( tuple ) ); 
+        tuple_count++;
     }
 }
 
 // 统计正斜方向上的
-for( var i = 0; i <= GRID_ROWS - GRID_COMBO; i++ ) {
-    for( var j = 0; j <= GRID_COLS - GRID_COMBO; j++ ) {
-        var tuple = [];
-        for( var k = 0; k < GRID_COMBO; k++ ) {
-            tuple.push( [ i + k, j + k ] );
+for ( var i = 0; i <= GRID_ROWS - GRID_COMBO; i++ )
+{
+    for ( var j = 0; j <= GRID_COLS - GRID_COMBO; j++ )
+    {
+        for ( var k = 0; k < GRID_COMBO; k++ )
+        {
+            tuples[ i + k ][ j + k ][ tuple_count ] = true;
         }
-        tuples.push( new Tuple( tuple ) ); 
+        tuple_count++;
     }
 }
 
 // 统计反斜方向上的
-for( var i = 0; i <= GRID_ROWS - GRID_COMBO; i++ ) {
-    for( var j = GRID_COLS - 1; j >= GRID_COMBO - 1; j-- ) {
-        var tuple = [];
-        for( var k = 0; k < GRID_COMBO; k++ ) {
-            tuple.push( [ i + k, j - k ] );
+for ( var i = 0; i <= GRID_ROWS - GRID_COMBO; i++ )
+{
+    for ( var j = GRID_COLS - 1; j >= GRID_COMBO - 1; j-- )
+    {
+        for ( var k = 0; k < GRID_COMBO; k++ )
+        {
+            tuples[ i + k ][ j - k ][ tuple_count ] = true;
         }
-        tuples.push( new Tuple( tuple ) ); 
+        tuple_count++;
     }
 }
-console.log( tuples );
+// 初始化赢法数组
+for ( var i = 0; i < tuple_count; i++ )
+{
+    my_win[ i ] = 0;
+    computer_win[ i ] = 0;
+}
+
+// 判断胜利
+function checkWin ( row, col ) {
+    for ( var i = 0; i < tuple_count; i++ )
+    {
+        if ( tuples[ row ][ col ][ i ] && my_win[ i ] != 10 )
+        {
+            my_win[ i ]++;
+            computer_win[ i ] = 10;
+        }
+        if ( my_win[ i ] === 5 )
+        {
+            return true;
+        }
+    }
+    return false;
+}
