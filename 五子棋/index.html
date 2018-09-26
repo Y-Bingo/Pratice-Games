@@ -14,7 +14,7 @@
 </body>
 <script src="./js/Base.js"></script>
 <script src="./js/UI.js"></script>
-<script src="./js/Rule.js"></script>
+<script src="./js/Rule3.js"></script>
 <script src="./js/Computer.js"></script>
 <script>
     var you_turn = true,
@@ -24,17 +24,17 @@
         var offset = windowToCanvas( e.clientX, e.clientY );
         var row = Math.floor( offset.x / GRID_WIDTH ),
             col = Math.floor( offset.y / GRID_HEIGHT );
-        if( chessData[ row ][ col ] ) return;
+        if( chess_data[ row ][ col ] ) return;
         drawPiece( row, col );
-        chessData[ row ][ col ] = 2;
-        if( checkWin( row, col ) ) {
-            over = true;
-            console.log( "you win ");
-        } else if( checkComputerWin( row, col ) ) {
-            over = true;
-            console.log( "computer win" );
-        }
-        ComputerAction();
+        chess_data[ row ][ col ] = chess_type.black;
+        // if( checkWin( row, col ) ) {
+        //     over = true;
+        //     console.log( "you win ");
+        // } else if( checkComputerWin( row, col ) ) {
+        //     over = true;
+        //     console.log( "computer win" );
+        // }
+        // ComputerAction();
     }
 </script>
 </html>

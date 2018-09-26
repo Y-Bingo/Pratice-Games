@@ -1,28 +1,7 @@
 // 规则3
-var source_map = {
-    // tuple is empty
-    Blank = 0,
-    // tuple contains a black chess
-    B = 1,
-    // tuple contains two black chesses
-    BB = 2,
-    // tuple contains tree black chesses
-    BBB = 3,
-    // tuple contains for black chesses
-    BBBB = 4,
-    // tuple contains a white chesses
-    W = 5,
-    // tuple contains two white chesses
-    WW = 6,
-    // tuple contains a three chesses
-    WWW = 7,
-    // tuple contains a four chesses
-    WWWW = 8,
-    // tuple does not exist
-    Virtual = 9,
-    // tuple contains at least one balck and at least one white
-    Polluted = 10
-};
+
+// 计算路径数
+var tuple_count = 0;
 
 /**
  * 计算所有的胜利路径
@@ -31,23 +10,77 @@ var source_map = {
  */
 function getWinPath( table, combo ) {
     // 比table大的数据大小
-    var all_wins = [];
-    // 一位数组
+    var all_wins = initWins( table );
+    // 一数组
     var tuple = [];
     // table的行数
-    var rowLen = table.length;
+    var row_len = table.length;
     // table的列数
-    var colLen = table[ 0 ].length;
-    for( var row = 0; row < rowLen; ++row ) {
-        all_wins[ row ] = [];
-        for( var col = 0; col < colLen - combo; ++col ) {
-            all_wins[ row ][ col ] = []; 
-            for( var count = 0; count < combo; ++count ) {
-
+    var col_len = table[ 0 ].length;
+    // 横向
+    for( var row = 0; row < row_len; ++row ) {
+        for( var col = 0; col <= col_len - combo; ++col ) {
+            tuple[ tuple_count ] = [];
+            for( var k = 0; k < combo; ++k ) {
+                tuple[ tuple_count ].push( encodeTableData( row, col + k, table[ row ][ col + k ] ) );
+                all_wins[ row ][ col + k ].push( tuple_count );
             }
+            tuple_count++;
         }
     }
+    // 纵向
+    for( var row = 0; row <= row_len - combo; ++row ) {
+        for( var col = 0; col < col_len; ++col ) {
+            tuple[ tuple_count ] = [];
+            for( var k = 0; k < combo; ++k ) {
+                tuple[ tuple_count ].push( encodeTableData( row + k, col, table[ row + k ][ col ] ) );
+                all_wins[ row + k ][ col ].push( tuple_count );
+            }
+            tuple_count++;
+        }
+    }
+    // 正斜
+    for( var row = 0; row <= row_len - combo; ++row ) {
+        for( var col = 0; col <= col_len - combo; ++col ) {
+            tuple[ tuple_count ] = [];
+            for( var k = 0; k < combo; ++k ) {
+                tuple[ tuple_count ].push( encodeTableData( row + k, col + k, table[ row + k ][ col + k ] ) );
+                all_wins[ row + k ][ col + k ].push( tuple_count );
+            }
+            tuple_count++;
+        }
+    }
+    // 反斜
+    for( var row = row_len - 1; row >= combo - 1; --row ) {
+        for( var col = 0; col <= col_len - combo; ++col ) {
+            tuple[ tuple_count ] = [];
+            for( var k = 0; k < combo; ++k ) {
+                tuple[ tuple_count ].push( encodeTableData( row - k, col + k, table[ row - k ][ col + k ] ) );
+                all_wins[ row - k ][ col + k ].push( tuple_count );
+            }
+            tuple_count++;
+        }
+    }
+    return {
+        "wins": all_wins,
+        "tuple": tuple
+    }
 }
+
+function initWins( table ) {
+    let row_len = table.length;
+    let col_len = table[ 0 ].length;
+    let all_wins = [];
+    for( var row = 0; row < row_len; ++row ) {
+        all_wins[ row ] = [];
+        for( var col = 0; col < col_len; ++col ) {
+            all_wins[ row ][ col ] = [];
+        }
+    }
+    return all_wins;
+}
+
+
 
 /**
  * 根据传入的评分表和桌面数据来计算出分值
@@ -61,6 +94,21 @@ function getScore( source_map, table ) {
 }
 
 
+function checkCombo( tuple, target_type ) {
+    var win_arr = [];
+    var type;
+    for( var i = 0; i < tuple.length; ++i ) {
+        for( var j = 0; j < tuple[ i ].length; ++j ) {
+            type = decodeTableData( tuple[ i ][ j ] ).type;
+            if( type !== target_type ) break;
+        }
+        if( j === 5 ) return true;
+    }
+    return false;
+}
+
+checkWin( getWinPath( chess_data, GRID_COMBO ).tuple );
+
 /**
  * 分析桌面
  * @param {Array} table 桌面数据 
@@ -68,7 +116,7 @@ function getScore( source_map, table ) {
  */
 function analyseTable( table ) {
 
-}
+}   
 
 /**
  * 把一个16进制的竖转化成位置状态数据
@@ -76,9 +124,9 @@ function analyseTable( table ) {
  */
 function decodeTableData( data ) {
    return {
-       "row": ( data & 0x100 ) >> 8,
-       "col": ( data & 0x010 ) >> 4,
-       "state": ( data & 0x001 ) >> 0
+       "row": ( data & ( 0xF << 8 ) ) >> 8,
+       "col": ( data & ( 0xF << 4 ) ) >> 4,
+       "type": ( data & ( 0xF ) ) >> 0
    }
 }
 
@@ -90,5 +138,5 @@ function decodeTableData( data ) {
  * @param {number} state 该位置的状态
  */
 function encodeTableData( row, col, state ) {
-    return 0x000 | ( row << 8 ) | ( col << 4 ) | ( state );
+    return ( row << 8 ) | ( col << 4 ) | ( state );
 }
