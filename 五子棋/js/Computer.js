@@ -47,7 +47,7 @@ function ComputerAction() {
     // 计算每个点的评分 ，只有没有下的点才能评分
     for( var row = 0; row < GRID_ROWS; row++ ) {
         for( var col = 0; col < GRID_COLS; col++ ) {
-            if( chessData[ row ][ col ] === 0 ) {
+            if( chess_data[ row ][ col ] === 0 ) {
                 for ( var count = 0; count < tuple_count; count++ )
                 {
                     if( !tuple[ row ][ col ][ count ] ) continue;

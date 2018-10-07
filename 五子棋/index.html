@@ -12,9 +12,9 @@
 <body>
     <canvas id="chess" width="450" height="450"></canvas>
 </body>
+<script src="./js/Rule3.js"></script>
 <script src="./js/Base.js"></script>
 <script src="./js/UI.js"></script>
-<script src="./js/Rule3.js"></script>
 <script src="./js/Computer.js"></script>
 <script>
     var you_turn = true,
@@ -27,6 +27,7 @@
         if( chess_data[ row ][ col ] ) return;
         drawPiece( row, col );
         chess_data[ row ][ col ] = chess_type.black;
+        rule.updateTuple( row, col, chess_type.black );
         // if( checkWin( row, col ) ) {
         //     over = true;
         //     console.log( "you win ");

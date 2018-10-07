@@ -54,9 +54,13 @@ for( var i = 0; i < GRID_ROWS; i++ ) {
         chess_data[ i ][ j ] = chess_type.blank;
     }
 }
+var rule = new Rule();
+rule.getWinPath( chess_data, GRID_COMBO );
+var wins = rule.wins;
+var tuple = rule.tuples;
 
-var wins = getWinPath( chess_data, GRID_COMBO ).wins;
-var tuple = getWinPath( chess_data, GRID_COMBO ).tuple;
+console.log( "wins", wins )
+console.log( "tuple", tuple );
 
 var canvas = document.querySelector( "#chess" );
 var context = canvas.getContext( "2d" );
