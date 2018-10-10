@@ -17,35 +17,44 @@ export class SpriteMrg {
     }
 
     // 添加精灵
-    static add( name, sprite ) {
+    static add( key, sprite ) {
         if( !this.instance ) {
             console.error( "还没有初始化该管理器" );
             return ;
         }
         sprite.ctx = this.instance.ctx;
-        sprite.width = sprite.width * this.instance.scale;
-        sprite.height = sprite.height * this.instance.scale;
-        this.instance.map.set( name, sprite );
+        sprite.width = Math.floor( sprite.width * this.instance.scale );
+        sprite.height = Math.floor( sprite.height * this.instance.scale );
+        sprite.resetProps && sprite.resetProps();
+        this.instance.map.set( key, sprite );
         return sprite;
     }
 
     // 移除精灵
-    static remove( name ) {
+    static remove( key ) {
         if( !this.instance ) {
             console.error( "还没有初始化该管理器" );
             return ;
         }
-        if( this.instance.map.has( name ) ) {
-            this.instance.map.delete( name );
+        if( this.instance.map.has( key ) ) {
+            this.instance.map.delete( key );
         }
     }
 
-    static get( name ) {
+    static get( key ) {
         if( !this.instance ) {
             console.error( "还没有初始化该管理器" );
             return ;
         }
-        return this.instance.map.get( name );
+        return this.instance.map.get( key );
+    }
+
+    static has( key ) {
+        if( !this.instance ) {
+            console.error( "还没有初始化该管理器" );
+            return ;
+        }
+        return this.instance.map.has( key );
     }
 
     static clear() {
@@ -67,13 +76,14 @@ export class SpriteMrg {
 
     // 适配屏幕
     adapter() {
-        let maxWidth = Math.min( window.innerWidth, ORI_WINDOW.width );
+        // let maxWidth = Math.min( window.innerWidth, ORI_WINDOW.width );
+        let maxWidth = window.innerWidth;
         // 缩放比
         this.scale = maxWidth /  ORI_WINDOW.width ;
     }
 }
 
 const ORI_WINDOW = {
-    width: 440,
-    height: 782
+    width: 400,
+    height: 711
 }

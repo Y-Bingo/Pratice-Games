@@ -25,6 +25,9 @@ export class Main {
         this.spriteMrg = SpriteMrg.getInstance();
         this.spriteMrg.canvas = this.canvas;
         this.spriteMrg.ctx = this.ctx;
+        // 适配canvas
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
         RES.createResMrg( res ).onResourceCompelte( ( resEvent ) => {
             this.creatScene();
         });
@@ -38,13 +41,15 @@ export class Main {
         for( let row = 0; row < table.length; row++ ) {
             bubbles[ row ] = [];
             for( let col = 0; col < table[ row ].length; col++ ){
-                let bubble = SpriteMrg.add( [ row, col ], new Bubble2( table[ row ][ col ], row, col ) );
+                if( !table[ row ][ col ] ) continue;
+                let bubble = SpriteMrg.add( `( ${ row }, ${ col } )`, new Bubble2( table[ row ][ col ], row, col ) );
                 bubble.draw();
                 bubbles[ row ][ col ] = bubble;
             }
         }
+        console.log( bubbles );
         // 创建指针
-        SpriteMrg.add( "pointer",  new Pointer() ).rotation( 0 );
+        SpriteMrg.add( "pointer",  new Pointer() ).rotation( 0 ).draw();
         // 创建分割线
         SpriteMrg.add( "deadLine", new DeadLine() ).draw( 0, SpriteMrg.get( "pointer" ).y );
         // 创建待发泡泡
