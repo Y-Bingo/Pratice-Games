@@ -37,7 +37,7 @@
     }
 
     static getColor( value ) {
-        if( this.bubbleColor.has( value ) ) { 
+        if( this.bubbleColor.has( value ) ) {
             return this.bubbleColor.get( value );
         }
         console.error( "没有该值得颜色，请传入正确的颜色值" );
