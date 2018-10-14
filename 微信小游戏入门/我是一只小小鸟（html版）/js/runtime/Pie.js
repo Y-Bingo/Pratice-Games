@@ -1,5 +1,4 @@
 import { Sprite } from "../base/Sprite.js";
-import { Director } from "../Director.js";
 
 export class Pie extends Sprite {
     
@@ -10,10 +9,10 @@ export class Pie extends Sprite {
                 window.innerWidth, 0,
                 img.width, img.height);
         this.top = top;
+        this.landSpeed = 2;
     }
 
     draw() {
-        const landSpeed = Director.getInstance().landSpeed;
         this.x = this.x - landSpeed;
         super.draw(
             this.img,
