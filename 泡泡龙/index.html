@@ -1,28 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>泡泡龙小游戏</title>
-    <style>
-        * {
-            margin: 0px;
-            padding: 0px;
-        }
-        body, html {
-            height: 100%;
-        }
-        
-        canvas {
-            margin: 0 auto;
-            box-shadow: -2px -5px 5px #666, 2px 2px 3px #454545;
-        }
 
-    </style>
-</head>
-<body>
-    <canvas id="canvas" width="414" height="736" >泡泡龙小游戏</canvas>
-</body>
-<script type="module" src="./main.js" ></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>泡泡龙小游戏</title>
+        <style>
+            * {
+                margin: 0px;
+                padding: 0px;
+            }
+
+            body,
+            html {
+                -ms-touch-action: none;
+                background: #888888;
+                padding: 0;
+                border: 0;
+                margin: 0;
+                height: 100%;
+            }
+
+            .game {
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+                margin: 0 auto;
+                background: #888888;
+                position: relative;
+                text-align: center;
+                /* vertical-align: middle; */
+            }
+
+            #canvas {
+                /* display: block; */
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                cursor: pointer;
+                background: #111111;
+            }
+
+            .dec {
+                display: block;
+                width: 300px;
+                position: absolute;
+                color: #fff;
+                left: 50%;
+                top: 50%;
+                margin-left: -150px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="game" data-entry-class="Main">
+            <canvas id="canvas" width="640" height="1080">泡泡龙小游戏</canvas>
+        </div>
+        <div class="dec">
+            <p>使用键盘“<-”或“->”控制指针来移动</p>
+        </div>
+    </body>
+    <script src="./core.js"></script>
+    <script type="module" src="./main.js"></script>
+
 </html>

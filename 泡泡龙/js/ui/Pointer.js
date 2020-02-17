@@ -12,20 +12,18 @@ export class Pointer {
         this.height = this.img.height;
         this.angle = 0;
         // 设置精灵的锚点
-        this.anchoOffsetX = window.innerWidth / 2;
-        this.anchoOffsetY = window.innerHeight - 31;
+        this.anchoOffsetX = designWidth / 2;
+        this.anchoOffsetY = designHeight - this.height + 84;
     }
 
-    draw ( x, y ) {
+    draw( x, y ) {
         // let angle = this.angle ;
         this.ctx.save();
-        this.x = x - this.anchoOffsetX || window.innerWidth / 2 - this.width / 2;
-        this.y = y - this.anchoOffsetY || window.innerHeight - this.height;
-        if ( !this.ctx )
-        {
+        this.x = x - this.anchoOffsetX || designWidth / 2 - this.width / 2;
+        this.y = y - this.anchoOffsetY || designHeight - this.height + 2;
+        if ( !this.ctx ) {
             console.log( "该精灵还没有注册到精灵管理" );
-        } else
-        {
+        } else {
             let traX = this.anchoOffsetX;
             let traY = this.anchoOffsetY;
             this.ctx.translate( traX, traY );
@@ -46,7 +44,7 @@ export class Pointer {
         }
     }
 
-    rotation ( angle ) {
+    rotation( angle ) {
         this.angle = angle * Math.PI / 180;
         // this.ctx.save();
         // // this.ctx.translate( window.innerWidth / 2, window.innerHeight / 2 );

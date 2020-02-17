@@ -26,8 +26,8 @@ export class Main {
         this.spriteMrg.canvas = this.canvas;
         this.spriteMrg.ctx = this.ctx;
         // 适配canvas
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        // this.canvas.width = window.innerWidth;
+        // this.canvas.height = window.innerHeight;
         RES.createResMrg( res ).onResourceCompelte( ( resEvent ) => {
             this.creatScene();
         } );
@@ -57,7 +57,7 @@ export class Main {
         SpriteMrg.add( "deadLine", new DeadLine() ).draw( 0, SpriteMrg.get( "pointer" ).y );
         // 创建待发泡泡
         let curBubble = SpriteMrg.add( "cur_bubble", new Bubble( 2 ) );
-        curBubble.draw( ( window.innerWidth - curBubble.width ) / 2, window.innerHeight - curBubble.height );
+        curBubble.draw( ( designWidth - curBubble.width ) / 2, designHeight- curBubble.height );
         // 实例化导演类
         this.director = new Director();
         this.director.ctx = this.ctx;

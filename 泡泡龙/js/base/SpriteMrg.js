@@ -102,13 +102,13 @@ export class SpriteMrg {
     // 适配屏幕
     adapter () {
         // let maxWidth = Math.min( window.innerWidth, ORI_WINDOW.width );
-        let maxWidth = window.innerWidth;
+        // let maxWidth = window.innerWidth;
         // 缩放比
-        this.scale = maxWidth / ORI_WINDOW.width;
+        this.scale = 1;
     }
 }
 
 const ORI_WINDOW = {
-    width: 400,
-    height: 711
+    width: 640,
+    height: 1136
 }
